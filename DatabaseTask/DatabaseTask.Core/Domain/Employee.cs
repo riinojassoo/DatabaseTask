@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace DatabaseTask.Core.Domain
@@ -7,8 +8,58 @@ namespace DatabaseTask.Core.Domain
     {
         [Key]
         public Guid Id { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string LastName { get; set; }
+
+        [Required]
+        [Range(10000000000, 99999999999)]
+        public long PersonalIdentificationNr { get; set; }
+
+        [StringLength(255)]
+        public string Address { get; set; }
+
+        [Range(100000000000000, 999999999999999)]
+        public long ContactPhone { get; set; }
+
+        [StringLength(255)]
+        [EmailAddress]
+        public string EmailAddress { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime WorkingSince { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? WorkingUntil { get; set; }
+
+        [StringLength(255)]
+        public string? Comment { get; set; }
+
+        // Foreign key to BranchOffice
+        [ForeignKey("BranchOffice")]
+        public Guid BranchOfficeId { get; set; }
+
+        // Navigation property to BranchOffice
+        public BranchOffice BranchOffice { get; set; }
+        public ICollection<Child> Children { get; set; } = new List<Child>();
+
+        public ICollection<SickLeave> sickLeaves { get; set; } = new List<SickLeave>();
+        public ICollection<Holiday> Holidays { get; set; } = new List<Holiday>();
+        public ICollection<HealthInspection> HealthInspections { get; set; } = new List<HealthInspection>();
+        public ICollection<Requests> Requests { get; set; } = new List<Requests>();
+
+        public ICollection<Renting> Renting { get; set; } = new List<Renting>();
+
+        public ICollection<WorkingHistory> WorkingHistory { get; set; } = new List<WorkingHistory>();
+        public ICollection<Job> Job { get; set; } = new List<Job>();
+        public ICollection<AccessPermission> AccessPermissions { get; set; } = new List<AccessPermission>();
+
+
 
         /// ESIMENE HINDELINE HARJUTUS
         /// Nõuded ja tegevus:
